@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 这里填写对应的Dao文件所在的路径 -->
+<mapper namespace="com.xiaozhan.demo.Dao.IAdminDao"    >
+    <!-- 填写数据库里实例Person对应的表的表名 -->
+    <!-- 这里是作为一个变量使用 -->
+    <sql id="table">Admin</sql>
+
+    <!-- id属性填写Dao文件里的函数名称 xxType是参数或是结果的类型根据情况填写 -->
+    <!-- 查询所有   -->
+    <select id="findAll" resultType="com.xiaozhan.demo.Entities.Admin">
+        SELECT
+        *
+        FROM
+        <include refid="table" />
+    </select>
+    <select id="getAdminByUserName" resultType="com.xiaozhan.demo.Entities.Admin">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+        WHERE
+        username=#{username}
+    </select>
+
+    <!--    &lt;!&ndash; 根据id查询 &ndash;&gt;-->
+    <!--    <select id="getPersonById" resultType="com.ljsh.test.model.Person">-->
+    <!--        SELECT-->
+    <!--        *-->
+    <!--        FROM-->
+    <!--        <include refid="table"/>-->
+    <!--        WHERE-->
+    <!--        id = #{id}-->
+    <!--    </select>-->
+
+    <!-- 增 -->
+    <insert id="insertAdmin" parameterType="com.xiaozhan.demo.Entities.Admin">
+        INSERT INTO
+        <include refid="table"/>
+        (username,password)
+        VALUES
+        (#{username},#{password})
+    </insert>
+
+    <!--    &lt;!&ndash; 改 &ndash;&gt;-->
+    <!--    <update id="update" parameterType="com.ljsh.test.model.Person">-->
+    <!--        UPDATE-->
+    <!--        <include refid="table"/>-->
+    <!--        SET-->
+    <!--        &lt;!&ndash;<if test="name != null">name = #{name}</if>&ndash;&gt;-->
+    <!--        name  = #{name},phone = #{phone},status = #{status}-->
+    <!--        WHERE-->
+    <!--        id = #{id}-->
+    <!--    </update>-->
+
+    <!--    &lt;!&ndash; 删 &ndash;&gt;-->
+    <delete id="deleteAdmin" parameterType="int">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE
+        id = #{id}
+    </delete>
+</mapper>

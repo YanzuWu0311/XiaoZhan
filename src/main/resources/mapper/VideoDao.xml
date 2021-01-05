@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 这里填写对应的Dao文件所在的路径 -->
+<mapper namespace="com.xiaozhan.demo.Dao.IVideoDao"    >
+    <!-- 填写数据库里实例Person对应的表的表名 -->
+    <!-- 这里是作为一个变量使用 -->
+    <sql id="table">video</sql>
+
+    <!-- id属性填写Dao文件里的函数名称 xxType是参数或是结果的类型根据情况填写 -->
+    <!-- 查询所有   -->
+    <select id="findAll" resultType="com.xiaozhan.demo.Entities.Video">
+        SELECT
+        *
+        FROM
+        <include refid="table" />
+        where
+        isCheck=true;
+    </select>
+    <select id="getVideoByTitle" resultType="com.xiaozhan.demo.Entities.Video">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+        WHERE
+        title=#{title}
+    </select>
+    <select id="getVideoById" resultType="com.xiaozhan.demo.Entities.Video">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+        WHERE
+        id=#{id}
+    </select>
+    <select id="getUnCheckedVideo" resultType="com.xiaozhan.demo.Entities.Video">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+        WHERE
+        isCheck=false
+    </select>
+    <select id="getCheckedVideo" resultType="com.xiaozhan.demo.Entities.Video">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+        WHERE
+        isCheck=false
+    </select>
+    <select id="getVideoByType" parameterType="int" resultType="com.xiaozhan.demo.Entities.Video">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+        WHERE
+        type=#{type} and isCheck=true
+    </select>
+    <!--    &lt;!&ndash; 根据id查询 &ndash;&gt;-->
+    <!--    <select id="getPersonById" resultType="com.ljsh.test.model.Person">-->
+    <!--        SELECT-->
+    <!--        *-->
+    <!--        FROM-->
+    <!--        <include refid="table"/>-->
+    <!--        WHERE-->
+    <!--        id = #{id}-->
+    <!--    </select>-->
+
+    <!-- 增 -->
+    <insert id="insertVideo" parameterType="com.xiaozhan.demo.Entities.Video">
+        INSERT INTO
+        <include refid="table"/>
+        (title,file,cover,up,uptime,thumbs,time,ischeck,type)
+        VALUES
+        (#{title},#{file},#{cover},#{up},#{uptime},#{thumbs},#{time},#{isCheck},#{type})
+    </insert>
+
+        <!-- 改 -->
+        <update id="check" parameterType="int">
+            UPDATE
+            <include refid="table"/>
+            SET
+            <!--<if test="name != null">name = #{name}</if>-->
+            ischeck  = true
+            WHERE
+            id = #{id}
+        </update>
+    <update id="up" parameterType="int">
+        UPDATE
+        <include refid="table"/>
+        SET
+        <!--<if test="name != null">name = #{name}</if>-->
+        thumbs  = thumbs +1
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- 删 -->
+    <delete id="delete" parameterType="int">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE
+        id = #{id}
+    </delete>
+
+    <delete id="deleteUserVideo" parameterType="String">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE
+        up = #{up}
+    </delete>
+</mapper>

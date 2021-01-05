@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Signin Template for Bootstrap</title>
+    <!-- @{}的形式是链接资源文件或者访问某个请求路径 -->
+    <link rel="stylesheet" th:href="@{/plugins/Adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css}">
+</head>
+
+<body class="text-center">
+<!--此处要写成method="POST"，不能写成th:method="POST"-->
+<form class="form-signin" style="width:600px;margin:300px auto" th:action="@{/admin/login}" method="POST">
+    <!--#{}的形式是从国际化配置文件中取值-->
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <span style="color:red" th:text="${msg}" ></span>
+    <label  class="sr-only" >Username</label>
+    <!--要写上name="username",否则访问LoginController方法时，没有传username会报错-->
+    <input type="text" name="username" class="form-control" placeholder="Username" required="" autofocus="">
+    <label class="sr-only" >Password</label>
+    <input type="password" name="password" class="form-control" placeholder="Password" required="">
+    <button class="btn btn-lg btn-primary btn-block" type="submit" >Sign in</button>
+</form>
+
+</body>
+
+</html>
